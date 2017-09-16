@@ -154,7 +154,7 @@ function processPostback(event) {
       }
       var message = greeting + "My name is BudgetBot, your personal finance assistant.";
       sendMessage(senderId, {text: message});
-      wait(1500);
+      wait(1000);
       var message2 = "You can start a goal to set your money-saving goal, see your spending history, or hear some finance tips.";
       sendMessage(senderId, {text: message2});
     });
@@ -218,12 +218,10 @@ function processMessage(event) {
             // var u = d.child('Users').val();
             //sendMessage(senderId, {text: u});
             //sendMessage(senderId, {text: root});
-          	sendMessage(senderId, {text: "Default message here. :/"});
+          	sendMessage(senderId, {text: "Sorry, I don't understand."});
       }
     } else if (message.attachments) {
       sendMessage(senderId, {text: "You have scanned a receipt."});
-    } else{
-      sendMessage(senderId, {text: "Sorry, I don't understand."});
     }
   }
 }
