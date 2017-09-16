@@ -95,12 +95,16 @@ function processMessage(event) {
       switch (formattedMsg) {
         case "goal":
         	sendMessage(senderId, {text: "Setting a goal."});
+          break;
         case "history":
         	sendMessage(senderId, {text: "Showing history."});
+          break;
         case "tips":
         	sendMessage(senderId, {text: "Random tip."});
+          break;
         case "help":
         	sendMessage(senderId, {text: "Send help!!!!!"});
+          break;
         default:
           	sendMessage(senderId, {text: "Default message here."});
       }

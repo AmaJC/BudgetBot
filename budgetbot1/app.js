@@ -35,6 +35,8 @@ app.post("/webhook", function (req, res) {
       entry.messaging.forEach(function(event) {
         if (event.postback) {
           processPostback(event);
+        } else if (event.message) {
+          processMessage(event);
         }
       });
     });
@@ -71,6 +73,44 @@ function processPostback(event) {
       var message2 = "You can start a goal to set your money-saving goal, see your spending history, or hear some finance tips.";
       sendMessage(senderId, {text: message2});
     });
+  }
+}
+
+
+function processMessage(event) {
+  if (!event.message.is_echo) {
+    var message = event.message;
+    var senderId = event.sender.id;
+
+    console.log("Received message from senderId: " + senderId);
+    console.log("Message is: " + JSON.stringify(message));
+
+    // You may get a text or attachment but not both
+    if (message.text) {
+      var formattedMsg = message.text.toLowerCase().trim();
+
+      // If we receive a text message, check to see if it matches any special
+      // keywords and send back the corresponding movie detail.
+      // Otherwise, search for new movie.
+      switch (formattedMsg) {
+        case "goal":
+        	sendMessage(senderId, {text: "Setting a goal."});
+          break;
+        case "history":
+        	sendMessage(senderId, {text: "Showing history."});
+          break;
+        case "tips":
+        	sendMessage(senderId, {text: "Random tip."});
+          break;
+        case "help":
+        	sendMessage(senderId, {text: "Send help!!!!!"});
+          break;
+        default:
+          	sendMessage(senderId, {text: "Default message here."});
+      }
+    } else if (message.attachments) {
+      sendMessage(senderId, {text: "Sorry, I don't understand your request."});
+    }
   }
 }
 
