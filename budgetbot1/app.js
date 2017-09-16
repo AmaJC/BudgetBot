@@ -183,26 +183,25 @@ function processMessage(event) {
           break;
         case "history":
         	sendMessage(senderId, {text: "Here's your historical spending data:"});
+          sendMessage(senderId, {text: "boba"});
           break;
         case "tip":
           getTip(senderId);
           break;
         case "help":
-          sendMessage(senderId, {text: "The functionalities of this chatbot are:"});
-          wait(1000);
-          sendMessage(senderId, {text: "goal, which allows you to set your goal,"});
-          wait(1000);
-          sendMessage(senderId, {text: "tip, which gives you some tips to save money"});
-          wait(1000);
-          sendMessage(senderId, {text: "add, add a purchase to history"});
-          wait(1000);
-          sendMessage(senderId, {text: "history, which allows you to see your past transactions"});
+          sendMessage(senderId, {text: "goal: which allows you to set your goal,"});
+          sendMessage(senderId, {text: "tip: which gives you some tips to save money"});
+          sendMessage(senderId, {text: "add: add a purchase to history"});
+          sendMessage(senderId, {text: "history: which allows you to see your past transactions"});
           break;
         case "add":
           sendMessage(senderId, {text: "Add a purchase to history."});
           break;
         case "car":
           sendMessage(senderId, {text: "Sweet! Your goal is saved."});
+          break;
+        case "boba":
+          sendMessage(senderId, {text: "Added to history!"});
           break;
         default:
             /*
@@ -230,7 +229,7 @@ function processMessage(event) {
   }
 }
 
-var COMMANDS = ["goal", "add", "history", "tip", "help", "car"];
+var COMMANDS = ["goal", "add", "history", "tip", "help", "car", "boba"];
 function getKeyword(formattedMsg) {
   var i = 0;
   while (formattedMsg.indexOf(COMMANDS[i]) === -1 && i < COMMANDS.length) {
