@@ -10,18 +10,32 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 //Get a reference to the database service
 var database = firebase.database();
-//works up to here
 
-var root = database.ref();
-var usersRef = root.child("users");
-usersRef.set({
-  JC: {
-    goals: "My goal"
-  },
-  Elaine: {
-    goals: "Yes"
-  }
-});
+
+function writeUserData(userId) {
+  firebase.database().ref().set("budgetbot-380cc/User:/" + "testing");
+} 
+
+//works up to here
+//var u = firebase.database().ref();
+//var USERS = firebase.database().ref().set('Users');
+//var USERS = firebase.database().ref().child('Users');
+//var user_ref = r.child('User');
+
+// firebase.database().ref().set({
+//     User: "Elaine"
+//   });
+
+// var root = database.ref();
+// var usersRef = root.child("users");
+// usersRef.set({
+//   JC: {
+//     goals: "My goal"
+//   },
+//   Elaine: {
+//     goals: "Yes"
+//   }
+// });
 
 var express = require("express");
 var request = require("request");
@@ -33,10 +47,7 @@ var tips = ["Food accounts for 23% of teen spending. Try to be conscious of that
 "Every dollar you save is a dollar that you can use to reach your goal!", 
 "Some places give discounts to students if they have their id. It doesn't hurt to ask stores if they have a student discount!", 
 "Look online for coupons! There are many coupons if you look for them.", 
-"Do DIY projects! Not only is it fun but it saves money!", "Start Saving for Retirement Now", 
-"If you use my financial rules for your life, you can be as personally prosperous as the guy with the hard-won MBA.", 
-"Create a financial calendar.", "\'Forget\' your wallet at home.", "Love yourself.", "Make bite-size money goals", 
-"Banish toxic money thoughts.", 'Download Intuit :P.'];
+"Do DIY projects! Not only is it fun but it saves money!"];
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -166,9 +177,30 @@ function processMessage(event) {
           getTip(senderId);
           break;
         case "help":
-        	sendMessage(senderId, {text: "Send help!!!!!"});
+          sendMessage(senderId, {text: "The functionalities of this chatbot are: 
+            goal, which allows you to set your goal, 
+            history, which allows you to see your past transactions, 
+            tip, which gives you some tips to save money, 
+            add a purchase to history."});
+          break;
+        case "add":
+          sendMessage(senderId, {text: "Add a purchase to history."});
           break;
         default:
+            var db = firebase.database();
+            var rf = db.ref();
+
+            /*
+            rf.on("value", function(snapshot){
+              sendMessage(snapshot.val());
+            }, function(errorObject) {
+              sendMessage(senderId, {text: errorObject.code});
+            });
+*/
+
+            // var u = d.child('Users').val();
+            //sendMessage(senderId, {text: u});
+            writeUserData("String");
           	sendMessage(senderId, {text: "Default message here."});
       }
     } else if (message.attachments) {
@@ -177,7 +209,7 @@ function processMessage(event) {
   }
 }
 
-var COMMANDS = ["goal", "history", "tip", "help"];
+var COMMANDS = ["goal", "add", "history", "tip", "help"];
 function getKeyword(formattedMsg) {
   var i = 0;
   while (formattedMsg.indexOf(COMMANDS[i]) === -1 && i < COMMANDS.length) {
