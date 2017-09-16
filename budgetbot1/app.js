@@ -215,12 +215,6 @@ function processMessage(event) {
             // var u = d.child('Users').val();
             //sendMessage(senderId, {text: u});
             //sendMessage(senderId, {text: root});
-            var r = firebase.database().ref('users/Chris').set({
-                goals: "goal1",
-                budget: "$100"
-            });
-            r = firebase.database().ref('users/Chris');
-            sendMessage(senderId, {text: r});
           	sendMessage(senderId, {text: "Default message here. :)"});
       }
     } else if (message.attachments) {
