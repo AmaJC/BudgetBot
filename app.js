@@ -27,8 +27,8 @@ var express = require("express");
 var request = require("request");
 var bodyParser = require("body-parser");
 
-var user_set_goal = false;
-var goalsAndCost = {};
+var user_set_goal = "c:/user_set_goal.txt";
+var goalsAndCost = "c:/goalsAndCost.txt";
 var tips = ["Food accounts for 23% of teen spending. Try to be conscious of that before going out to eat!", 
 "Every dollar you save is a dollar that you can use to reach your goal!", 
 "Some places give discounts to students if they have their id. It doesn't hurt to ask stores if they have a student discount!", 
@@ -60,8 +60,13 @@ app.get("/webhook", function (req, res) {
 // All callbacks for Messenger will be POST-ed here
 app.post("/webhook", function (req, res) {
   // Make sure this is a page subscription
-  if(user_set_goal){
-    user_set_goal = false;
+    user_set_goal.open("r");
+    var str = file.readln();
+    user_set_goal.close();
+  if(str === "false"){
+    user_set_goal.open("w");
+    user_set_goal.write(("").getBytes());
+    user_set_goal.write("false");
     mainGoal(event.ender.id);
     return;
   }
