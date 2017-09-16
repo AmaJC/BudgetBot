@@ -42,6 +42,7 @@ app.post("/webhook", function (req, res) {
   if(get_tip){
     get_tip = false;
     getTip();
+    break;
   }
 
   if (req.body.object == "page") {
