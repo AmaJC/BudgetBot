@@ -3,8 +3,7 @@ var request = require("request");
 var bodyParser = require("body-parser");
 
 //changed here
-//if option is zero do the default app.post
-boolean user_set_goal = false;
+var user_set_goal = false;
 var goalsAndCost = {};
 //end changes
 
@@ -119,7 +118,6 @@ function processMessage(event) {
       var keyword = getKeyword(formattedMsg);
       switch (keyword) {
         case "goal": // if formattedMsg contains goal
-          option = 1;
           user_set_goal = true;
         	sendMessage(senderId, {text: "Great! What do you want to save for?"});
           break;
