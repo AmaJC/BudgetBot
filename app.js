@@ -1,12 +1,37 @@
+/** Firebase **/
+// var firebase = require("firebase");
+// // Set the configuration for your app
+// var firebaseConfig = {
+//   apiKey: "AIzaSyAnB_k77LGv2NzwUX7kFud-HHf2Z5puESE",  // Firebase Console > Project > Settings > Web API Key
+//   authDomain: "budgetbot-380cc.firebaseapp.com",
+//   databaseURL: "https://budgetbot-380cc.firebaseio.com", // This chatbot only utilizes Firebase RTDB
+//   storageBucket: "budgetbot-380cc.appspot.com"
+// };
+// firebase.initializeApp(firebaseConfig);
+//Get a reference to the database service
+// var database = firebase.database();
+// var root = database.ref();
+// var usersRef = root.child("users");
+// usersRef.set({
+//   JC: {
+//     goals: "My goal"
+//   },
+//   Elaine: {
+//     goals: "Yes"
+//   }
+// });
+
 var express = require("express");
 var request = require("request");
 var bodyParser = require("body-parser");
 
-//changed here
 var user_set_goal = false;
 var goalsAndCost = {};
-var tips = ["tip1", "tip2", "tip3", "tip4", "tip5"];
-//end changes
+var tips = ["Food accounts for 23% of teen spending. Try to be conscious of that before going out to eat!", 
+"Every dollar you save is a dollar that you can use to reach your goal!", 
+"Some places give discounts to students if they have their id. It doesn't hurt to ask stores if they have a student discount!", 
+"Look online for coupons! There are many coupons if you look for them.", 
+"Do DIY projects! Not only is it fun but it saves money!"];
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -147,7 +172,7 @@ function processMessage(event) {
   }
 }
 
-var COMMANDS = ["goal", "history", "tips", "help"];
+var COMMANDS = ["goal", "history", "tip", "help"];
 function getKeyword(formattedMsg) {
   var i = 0;
   while (formattedMsg.indexOf(COMMANDS[i]) === -1 && i < COMMANDS.length) {
