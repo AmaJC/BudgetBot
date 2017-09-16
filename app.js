@@ -35,7 +35,7 @@ app.post("/webhook", function (req, res) {
   // Make sure this is a page subscription
   if(user_set_goal){
     user_set_goal = false;
-    mainGoal();
+    mainGoal(event.ender.id);
     return;
   }
 
@@ -59,11 +59,11 @@ app.post("/webhook", function (req, res) {
 
 //changed here
 
-function getTip(){
+function getTip(senderId){
   sendMessage(senderId, {text: tips[Math.floor(Math.random()*tips.length)]});
 }
 
-function mainGoal(){
+function mainGoal(senderId){
   sendMessage(senderId, {text: "You've set a goal"});
 }
 function setGoal(goal){
@@ -133,7 +133,7 @@ function processMessage(event) {
         	sendMessage(senderId, {text: "Showing history."});
           break;
         case "tips":
-          getTip();
+          getTip(senderId);
           break;
         case "help":
         	sendMessage(senderId, {text: "Send help!!!!!"});
