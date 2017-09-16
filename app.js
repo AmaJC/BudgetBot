@@ -33,7 +33,8 @@ app.get("/webhook", function (req, res) {
 app.post("/webhook", function (req, res) {
   // Make sure this is a page subscription
   if(user_set_goal){
-    mainGoals();
+    mainGoal();
+    user_set_goal = false;
   }
   if (req.body.object == "page") {
     // Iterate over each entry
