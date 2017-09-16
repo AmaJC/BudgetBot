@@ -31,7 +31,10 @@ var tips = ["Food accounts for 23% of teen spending. Try to be conscious of that
 "Every dollar you save is a dollar that you can use to reach your goal!", 
 "Some places give discounts to students if they have their id. It doesn't hurt to ask stores if they have a student discount!", 
 "Look online for coupons! There are many coupons if you look for them.", 
-"Do DIY projects! Not only is it fun but it saves money!"];
+"Do DIY projects! Not only is it fun but it saves money!", "Start Saving for Retirement Now", 
+"If you use my financial rules for your life, you can be as personally prosperous as the guy with the hard-won MBA.", 
+"Create a financial calendar.", "\'Forget\' your wallet at home.", "Love yourself.", "Make bite-size money goals", 
+"Banish toxic money thoughts.", 'Download Intuit :P.'];
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
