@@ -104,7 +104,8 @@ function processMessage(event) {
         	sendMessage(senderId, {text: "Random tip."});
           break;
         case "help":
-        	sendMessage(senderId, {text: "Send help!!!!!"});
+        	sendMessage(senderId, {text: "Here is the a list of things I can help you with: "});
+          sendMessage(senderId, {test: "Type \'goal\' to set a goal. Type \'history\' to check your expenditure history. Type \'tips\' to check out money saving tips."})
           break;
         default:
           	sendMessage(senderId, {text: "Default message here."});
