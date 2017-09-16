@@ -2,6 +2,12 @@ var express = require("express");
 var request = require("request");
 var bodyParser = require("body-parser");
 
+//changed here
+//if option is zero do the default app.post
+boolean user_set_goal = false;
+var goalsAndCost = {};
+//end changes
+
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -27,6 +33,9 @@ app.get("/webhook", function (req, res) {
 // All callbacks for Messenger will be POST-ed here
 app.post("/webhook", function (req, res) {
   // Make sure this is a page subscription
+  if(user_set_goal){
+    mainGoals();
+  }
   if (req.body.object == "page") {
     // Iterate over each entry
     // There may be multiple entries if batched
@@ -44,6 +53,21 @@ app.post("/webhook", function (req, res) {
     res.sendStatus(200);
   }
 });
+
+//changed here
+
+function mainGoal(){
+  sendMessage(senderId, {text: "You've set a goal"});
+}
+function setGoal(goal){
+  goalsAndCost[goal] = 0;
+}
+
+function setCost(goal, cost){
+  goalsAndCost[goal] = cost;
+}
+
+//end changes
 
 function processPostback(event) {
   var senderId = event.sender.id;
@@ -95,7 +119,9 @@ function processMessage(event) {
       var keyword = getKeyword(formattedMsg);
       switch (keyword) {
         case "goal": // if formattedMsg contains goal
-        	sendMessage(senderId, {text: "Setting a goal."});
+          option = 1;
+          user_set_goal = true;
+        	sendMessage(senderId, {text: "Great! What do you want to save for?"});
           break;
         case "history":
         	sendMessage(senderId, {text: "Showing history."});
