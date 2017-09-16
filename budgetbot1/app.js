@@ -92,8 +92,9 @@ function processMessage(event) {
       // If we receive a text message, check to see if it matches any special
       // keywords and send back the corresponding movie detail.
       // Otherwise, search for new movie.
-      switch (formattedMsg) {
-        case "goal":
+      var keyword = getKeyword(formattedMsg);
+      switch (keyword) {
+        case "goal": // if formattedMsg contains goal
         	sendMessage(senderId, {text: "Setting a goal."});
           break;
         case "history":
@@ -111,6 +112,19 @@ function processMessage(event) {
     } else if (message.attachments) {
       sendMessage(senderId, {text: "Sorry, I don't understand your request."});
     }
+  }
+}
+
+var COMMANDS = ["goal", "history", "tips", "help"];
+function getKeyword(formattedMsg) {
+  var i = 0;
+  while (formattedMsg.indexOf(COMMANDS[i]) === -1 && i < COMMANDS.length) {
+    i++;
+  }
+  if (i < COMMANDS.length) {
+    return COMMANDS[i];
+  } else {
+    return "";
   }
 }
 
