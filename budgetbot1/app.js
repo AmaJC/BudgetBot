@@ -2,6 +2,12 @@ var express = require("express");
 var request = require("request");
 var bodyParser = require("body-parser");
 
+//changed here
+var user_set_goal = false;
+var goalsAndCost = {};
+var tips = ["tip1", "tip2", "tip3", "tip4", "tip5"];
+//end changes
+
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -27,6 +33,12 @@ app.get("/webhook", function (req, res) {
 // All callbacks for Messenger will be POST-ed here
 app.post("/webhook", function (req, res) {
   // Make sure this is a page subscription
+  if(user_set_goal){
+    user_set_goal = false;
+    mainGoal(event.ender.id);
+    return;
+  }
+
   if (req.body.object == "page") {
     // Iterate over each entry
     // There may be multiple entries if batched
@@ -44,6 +56,25 @@ app.post("/webhook", function (req, res) {
     res.sendStatus(200);
   }
 });
+
+//changed here
+
+function getTip(senderId){
+  sendMessage(senderId, {text: tips[Math.floor(Math.random()*tips.length)]});
+}
+
+function mainGoal(senderId){
+  sendMessage(senderId, {text: "You've set a goal"});
+}
+function setGoal(goal){
+  goalsAndCost[goal] = 0;
+}
+
+function setCost(goal, cost){
+  goalsAndCost[goal] = cost;
+}
+
+//end changes
 
 function processPostback(event) {
   var senderId = event.sender.id;
@@ -95,13 +126,14 @@ function processMessage(event) {
       var keyword = getKeyword(formattedMsg);
       switch (keyword) {
         case "goal": // if formattedMsg contains goal
-        	sendMessage(senderId, {text: "Setting a goal."});
+          user_set_goal = true;
+        	sendMessage(senderId, {text: "Great! What do you want to save for?"});
           break;
         case "history":
         	sendMessage(senderId, {text: "Showing history."});
           break;
         case "tips":
-        	sendMessage(senderId, {text: "Random tip."});
+          getTip(senderId);
           break;
         case "help":
         	sendMessage(senderId, {text: "Here is the a list of things I can help you with: "});
