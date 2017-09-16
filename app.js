@@ -4,7 +4,6 @@ var bodyParser = require("body-parser");
 
 //changed here
 var user_set_goal = false;
-var get_tip = false;
 var goalsAndCost = {};
 var tips = ["tip1", "tip2", "tip3", "tip4", "tip5"];
 //end changes
@@ -37,12 +36,7 @@ app.post("/webhook", function (req, res) {
   if(user_set_goal){
     user_set_goal = false;
     mainGoal();
-    break;
-  }
-  if(get_tip){
-    get_tip = false;
-    getTip();
-    break;
+    return;
   }
 
   if (req.body.object == "page") {
@@ -139,7 +133,7 @@ function processMessage(event) {
         	sendMessage(senderId, {text: "Showing history."});
           break;
         case "tips":
-          get_tip = true;
+          getTip();
           break;
         case "help":
         	sendMessage(senderId, {text: "Send help!!!!!"});
