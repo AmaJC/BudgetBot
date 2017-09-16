@@ -4,7 +4,9 @@ var bodyParser = require("body-parser");
 
 //changed here
 var user_set_goal = false;
+var get_tip = false;
 var goalsAndCost = {};
+var tips = ["tip1", "tip2", "tip3", "tip4", "tip5"];
 //end changes
 
 var app = express();
@@ -33,9 +35,16 @@ app.get("/webhook", function (req, res) {
 app.post("/webhook", function (req, res) {
   // Make sure this is a page subscription
   if(user_set_goal){
-    mainGoal();
     user_set_goal = false;
+    mainGoal();
+    break;
   }
+  if(get_tip){
+    get_tip = false;
+    getTip();
+    break;
+  }
+
   if (req.body.object == "page") {
     // Iterate over each entry
     // There may be multiple entries if batched
@@ -55,6 +64,10 @@ app.post("/webhook", function (req, res) {
 });
 
 //changed here
+
+function getTip(){
+  sendMessage(senderId, {text: tips[Math.floor(Math.random()*tips.length)]});
+}
 
 function mainGoal(){
   sendMessage(senderId, {text: "You've set a goal"});
@@ -126,7 +139,7 @@ function processMessage(event) {
         	sendMessage(senderId, {text: "Showing history."});
           break;
         case "tips":
-        	sendMessage(senderId, {text: "Random tip."});
+          get_tip = true;
           break;
         case "help":
         	sendMessage(senderId, {text: "Send help!!!!!"});
