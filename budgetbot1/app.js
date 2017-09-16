@@ -183,7 +183,7 @@ function processMessage(event) {
           break;
         case "history":
         	sendMessage(senderId, {text: "Here's your historical spending data:"});
-          sendMessage(senderId, {text: "boba: 12"});
+            sendMessage(senderId, {text: "http://thismatter.com/economics/images/gdp-2005-2010-bar-graph.png"});
           break;
         case "tip":
           getTip(senderId);
@@ -258,6 +258,23 @@ function sendMessage(recipientId, message) {
       console.log("Error sending message: " + response.error);
     }
   });
+}
+
+// sends message to user
+function sendHistory(recipientId) {
+    request({
+        url: "https://graph.facebook.com/v2.6/me/messages",
+        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        method: "POST",
+        json: {
+            recipient: {id: recipientId},
+            message: "http://thismatter.com/economics/images/gdp-2005-2010-bar-graph.png"
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log("Error sending message: " + response.error);
+        }
+    });
 }
 
 function wait(ms) {
