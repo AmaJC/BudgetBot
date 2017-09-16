@@ -183,7 +183,7 @@ function processMessage(event) {
           break;
         case "history":
         	sendMessage(senderId, {text: "Here's your historical spending data:"});
-            sendMessage(senderId, {text: "http://thismatter.com/economics/images/gdp-2005-2010-bar-graph.png"});
+            sendMessage(senderId, {text: "http://tinyurl.com/y9gqjtby"});
           break;
         case "tip":
           getTip(senderId);
@@ -215,10 +215,10 @@ function processMessage(event) {
             // var u = d.child('Users').val();
             //sendMessage(senderId, {text: u});
             //sendMessage(senderId, {text: root});
-          	sendMessage(senderId, {text: "Default message here. :)"});
+          	sendMessage(senderId, {text: "Default message here. :/"});
       }
     } else if (message.attachments) {
-      sendMessage(senderId, {text: "Sorry, I don't understand your request."});
+      sendMessage(senderId, {text: "You have scanned a receipt."});
     }
   }
 }
