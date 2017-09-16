@@ -9,12 +9,10 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 //Get a reference to the database service
-var database = firebase.database();
 //works up to here
 
-var root = database.ref();
-var usersRef = root.child("users");
-usersRef.set({
+var root = firebase.database().ref('users/');
+root.set({
   JC: {
     goals: "My goal"
   },
@@ -63,7 +61,7 @@ app.post("/webhook", function (req, res) {
     user_set_goal.open("r");
     var str = file.readln();
     user_set_goal.close();
-  if(str === "false"){
+  if(str){
     user_set_goal.open("w");
     user_set_goal.write(("").getBytes());
     user_set_goal.write("false");
