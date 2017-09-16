@@ -154,7 +154,7 @@ function processPostback(event) {
       }
       var message = greeting + "My name is BudgetBot, your personal finance assistant.";
       sendMessage(senderId, {text: message});
-      wait(1000);
+      wait(1500);
       var message2 = "You can start a goal to set your money-saving goal, see your spending history, or hear some finance tips.";
       sendMessage(senderId, {text: message2});
     });
