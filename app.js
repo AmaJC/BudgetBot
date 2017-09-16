@@ -1,25 +1,27 @@
 /** Firebase **/
-// var firebase = require("firebase");
 // // Set the configuration for your app
-// var firebaseConfig = {
-//   apiKey: "AIzaSyAnB_k77LGv2NzwUX7kFud-HHf2Z5puESE",  // Firebase Console > Project > Settings > Web API Key
-//   authDomain: "budgetbot-380cc.firebaseapp.com",
-//   databaseURL: "https://budgetbot-380cc.firebaseio.com", // This chatbot only utilizes Firebase RTDB
-//   storageBucket: "budgetbot-380cc.appspot.com"
-// };
-// firebase.initializeApp(firebaseConfig);
+var firebase = require("firebase");
+var firebaseConfig = {
+  apiKey: "AIzaSyAnB_k77LGv2NzwUX7kFud-HHf2Z5puESE",  // Firebase Console > Project > Settings > Web API Key
+  authDomain: "budgetbot-380cc.firebaseapp.com",
+  databaseURL: "https://budgetbot-380cc.firebaseio.com", // This chatbot only utilizes Firebase RTDB
+  storageBucket: "budgetbot-380cc.appspot.com"
+};
+firebase.initializeApp(firebaseConfig);
 //Get a reference to the database service
-// var database = firebase.database();
-// var root = database.ref();
-// var usersRef = root.child("users");
-// usersRef.set({
-//   JC: {
-//     goals: "My goal"
-//   },
-//   Elaine: {
-//     goals: "Yes"
-//   }
-// });
+var database = firebase.database();
+//works up to here
+
+var root = database.ref();
+var usersRef = root.child("users");
+usersRef.set({
+  JC: {
+    goals: "My goal"
+  },
+  Elaine: {
+    goals: "Yes"
+  }
+});
 
 var express = require("express");
 var request = require("request");
