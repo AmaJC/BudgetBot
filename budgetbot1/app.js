@@ -221,7 +221,7 @@ function processMessage(event) {
             });
             r = firebase.database().ref('users/Chris');
             sendMessage(senderId, {text: r});
-          	sendMessage(senderId, {text: "Default message here."});
+          	sendMessage(senderId, {text: "Default message here. :)"});
       }
     } else if (message.attachments) {
       sendMessage(senderId, {text: "Sorry, I don't understand your request."});
