@@ -139,7 +139,7 @@ function processMessage(event) {
         	sendMessage(senderId, {text: "Showing history."});
           break;
         case "tips":
-        	sendMessage(senderId, {text: "Random tip."});
+          get_tip = true;
           break;
         case "help":
         	sendMessage(senderId, {text: "Send help!!!!!"});
