@@ -222,6 +222,8 @@ function processMessage(event) {
       }
     } else if (message.attachments) {
       sendMessage(senderId, {text: "You have scanned a receipt."});
+    } else{
+      sendMessage(senderId, {text: "Sorry, I don't understand."});
     }
   }
 }
