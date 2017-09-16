@@ -24,7 +24,7 @@ firebase.database().ref('users/Chris').set({
 
 function writeUserData(userId) {
   firebase.database().ref().set("budgetbot-380cc/User:/" + "testing");
-} 
+}
 
 //works up to here
 //var u = firebase.database().ref();
@@ -55,10 +55,10 @@ var user_set_goal = false;
 var goal;
 var user_set_goal_cost = false;
 var cost;
-var tips = ["Food accounts for 23% of teen spending. Try to be conscious of that before going out to eat!", 
-"Every dollar you save is a dollar that you can use to reach your goal!", 
-"Some places give discounts to students if they have their id. It doesn't hurt to ask stores if they have a student discount!", 
-"Look online for coupons! There are many coupons if you look for them.", 
+var tips = ["Food accounts for 23% of teen spending. Try to be conscious of that before going out to eat!",
+"Every dollar you save is a dollar that you can use to reach your goal!",
+"Some places give discounts to students if they have their id. It doesn't hurt to ask stores if they have a student discount!",
+"Look online for coupons! There are many coupons if you look for them.",
 "Do DIY projects! Not only is it fun but it saves money!"];
 
 var app = express();
@@ -183,7 +183,7 @@ function processMessage(event) {
           break;
         case "history":
         	sendMessage(senderId, {text: "Here's your historical spending data:"});
-          sendMessage(senderId, {text: "boba"});
+          sendMessage(senderId, {text: "boba: 12"});
           break;
         case "tip":
           getTip(senderId);
@@ -266,4 +266,3 @@ function wait(ms) {
   do { d2 = new Date(); }
   while(d2-d < ms);
 }
-

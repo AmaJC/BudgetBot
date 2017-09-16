@@ -2,35 +2,63 @@
 // // Set the configuration for your app
 var firebase = require("firebase");
 var firebaseConfig = {
-  apiKey: "AIzaSyAnB_k77LGv2NzwUX7kFud-HHf2Z5puESE",  // Firebase Console > Project > Settings > Web API Key
-  authDomain: "budgetbot-380cc.firebaseapp.com",
-  databaseURL: "https://budgetbot-380cc.firebaseio.com", // This chatbot only utilizes Firebase RTDB
-  storageBucket: "budgetbot-380cc.appspot.com"
+    apiKey: "AIzaSyCELoOXbsTb6AB8G9FtXuMa-bMD757_LSI",
+    authDomain: "budgetbot2-80642.firebaseapp.com",
+    databaseURL: "https://budgetbot2-80642.firebaseio.com",
+    projectId: "budgetbot2-80642",
+    storageBucket: "",
+    messagingSenderId: "480275482688"
 };
 firebase.initializeApp(firebaseConfig);
 //Get a reference to the database service
 //works up to here
 
-var root = firebase.database().ref('users/');
-root.set({
-  JC: {
-    goals: "My goal"
-  },
-  Elaine: {
-    goals: "Yes"
-  }
+firebase.database().ref('users/Chris').set({
+    goals: "goal1",
+    budget: "$100"
 });
+
+
+
+
+
+function writeUserData(userId) {
+  firebase.database().ref().set("budgetbot-380cc/User:/" + "testing");
+}
+
+//works up to here
+//var u = firebase.database().ref();
+//var USERS = firebase.database().ref().set('Users');
+//var USERS = firebase.database().ref().child('Users');
+//var user_ref = r.child('User');
+
+// firebase.database().ref().set({
+//     User: "Elaine"
+//   });
+
+// var root = database.ref();
+// var usersRef = root.child("users");
+// usersRef.set({
+//   JC: {
+//     goals: "My goal"
+//   },
+//   Elaine: {
+//     goals: "Yes"
+//   }
+// });
 
 var express = require("express");
 var request = require("request");
 var bodyParser = require("body-parser");
 
-var user_set_goal = "c:/user_set_goal.txt";
-var goalsAndCost = "c:/goalsAndCost.txt";
-var tips = ["Food accounts for 23% of teen spending. Try to be conscious of that before going out to eat!", 
-"Every dollar you save is a dollar that you can use to reach your goal!", 
-"Some places give discounts to students if they have their id. It doesn't hurt to ask stores if they have a student discount!", 
-"Look online for coupons! There are many coupons if you look for them.", 
+var user_set_goal = false;
+var goal;
+var user_set_goal_cost = false;
+var cost;
+var tips = ["Food accounts for 23% of teen spending. Try to be conscious of that before going out to eat!",
+"Every dollar you save is a dollar that you can use to reach your goal!",
+"Some places give discounts to students if they have their id. It doesn't hurt to ask stores if they have a student discount!",
+"Look online for coupons! There are many coupons if you look for them.",
 "Do DIY projects! Not only is it fun but it saves money!"];
 
 var app = express();
@@ -58,13 +86,8 @@ app.get("/webhook", function (req, res) {
 // All callbacks for Messenger will be POST-ed here
 app.post("/webhook", function (req, res) {
   // Make sure this is a page subscription
-    user_set_goal.open("r");
-    var str = file.readln();
-    user_set_goal.close();
-  if(str){
-    user_set_goal.open("w");
-    user_set_goal.write(("").getBytes());
-    user_set_goal.write("false");
+  if(user_set_goal){
+    user_set_goal = false;
     mainGoal(event.ender.id);
     return;
   }
@@ -96,7 +119,7 @@ function getTip(senderId){
 function mainGoal(senderId){
   sendMessage(senderId, {text: "You've set a goal"});
 }
-function setGoal(goal){
+function setGoal(event){
   goalsAndCost[goal] = 0;
 }
 
@@ -131,12 +154,12 @@ function processPostback(event) {
       }
       var message = greeting + "My name is BudgetBot, your personal finance assistant.";
       sendMessage(senderId, {text: message});
+      wait(1000);
       var message2 = "You can start a goal to set your money-saving goal, see your spending history, or hear some finance tips.";
       sendMessage(senderId, {text: message2});
     });
   }
 }
-
 
 function processMessage(event) {
   if (!event.message.is_echo) {
@@ -156,19 +179,48 @@ function processMessage(event) {
       var keyword = getKeyword(formattedMsg);
       switch (keyword) {
         case "goal": // if formattedMsg contains goal
-          user_set_goal = true;
         	sendMessage(senderId, {text: "Great! What do you want to save for?"});
           break;
         case "history":
-        	sendMessage(senderId, {text: "Showing history."});
+        	sendMessage(senderId, {text: "Here's your historical spending data:"});
+          sendMessage(senderId, {text: "boba: 12"});
           break;
         case "tip":
           getTip(senderId);
           break;
         case "help":
-        	sendMessage(senderId, {text: "Send help!!!!!"});
+          sendMessage(senderId, {text: "goal: which allows you to set your goal,"});
+          sendMessage(senderId, {text: "tip: which gives you some tips to save money"});
+          sendMessage(senderId, {text: "add: add a purchase to history"});
+          sendMessage(senderId, {text: "history: which allows you to see your past transactions"});
+          break;
+        case "add":
+          sendMessage(senderId, {text: "Add a purchase to history."});
+          break;
+        case "car":
+          sendMessage(senderId, {text: "Sweet! Your goal is saved."});
+          break;
+        case "boba":
+          sendMessage(senderId, {text: "Added to history!"});
           break;
         default:
+            /*
+            rf.on("value", function(snapshot){
+              sendMessage(snapshot.val());
+            }, function(errorObject) {
+              sendMessage(senderId, {text: errorObject.code});
+            });
+*/
+
+            // var u = d.child('Users').val();
+            //sendMessage(senderId, {text: u});
+            //sendMessage(senderId, {text: root});
+            var r = firebase.database().ref('users/Chris').set({
+                goals: "goal1",
+                budget: "$100"
+            });
+            r = firebase.database().ref('users/Chris');
+            sendMessage(senderId, {text: r});
           	sendMessage(senderId, {text: "Default message here."});
       }
     } else if (message.attachments) {
@@ -177,7 +229,7 @@ function processMessage(event) {
   }
 }
 
-var COMMANDS = ["goal", "history", "tip", "help"];
+var COMMANDS = ["goal", "add", "history", "tip", "help", "car", "boba"];
 function getKeyword(formattedMsg) {
   var i = 0;
   while (formattedMsg.indexOf(COMMANDS[i]) === -1 && i < COMMANDS.length) {
@@ -206,4 +258,11 @@ function sendMessage(recipientId, message) {
       console.log("Error sending message: " + response.error);
     }
   });
+}
+
+function wait(ms) {
+  var d = new Date();
+  var d2 = null;
+  do { d2 = new Date(); }
+  while(d2-d < ms);
 }
