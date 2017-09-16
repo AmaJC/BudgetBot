@@ -197,9 +197,12 @@ function processMessage(event) {
         case "add":
           sendMessage(senderId, {text: "Add a purchase to history."});
           break;
-        case "car":
+        case "longboard":
           sendMessage(senderId, {text: "Sweet! Your goal is saved."});
           break;
+          case "thank":
+            sendMessage(senderId, {text: "No problem!"});
+            break;
         case "boba":
           sendMessage(senderId, {text: "Added to history!"});
           break;
@@ -223,7 +226,7 @@ function processMessage(event) {
   }
 }
 
-var COMMANDS = ["goal", "add", "history", "tip", "help", "car", "boba"];
+var COMMANDS = ["goal", "add", "history", "tip", "help", "longboard", "boba", "thank"];
 function getKeyword(formattedMsg) {
   var i = 0;
   while (formattedMsg.indexOf(COMMANDS[i]) === -1 && i < COMMANDS.length) {
