@@ -1,5 +1,4 @@
-# BudgetBot #
-# HackInToIt 3.0 #
+# BudgetBot - Hack Into It 3.0 - September 16, 2017 #
 
 # Team Members #
 Elaine Chien, JC Dy, Neha Kunjal, Yining Liu, Wilson Wang
@@ -11,7 +10,9 @@ BudgetBot is a personal Messenger chatbot that enables users to better their fin
 https://www.fb.me/TheBudgetBot
 
 ![alt text](/README-images/Profile.png)
+
 ![alt text](/README-images/Chat.png)
+
 ![alt text](/README-images/Graph.png)
 
 
